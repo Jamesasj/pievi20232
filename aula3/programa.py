@@ -14,6 +14,7 @@ print(dados1.head(5))
 #print('############### dados 3 #####################')
 #print(len(dados3))
 
+
 # arquivo = open('dados/saida1.txt', 'w')
 # arquivo.write(dados3.to_csv())
 dadosx = dados1[['CodigoInstrumento','PrecoNegocio']]
