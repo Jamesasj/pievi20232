@@ -5,7 +5,7 @@ from airflow.decorators import dag, task
 from airflow.hooks.postgres_hook import PostgresHook
 import pandas as pd;
 @dag(
-    schedule='0 * * * *',
+    schedule='*/5 * * * *',
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
     catchup=False,
     tags=["pievi"],
@@ -43,9 +43,7 @@ def tutorial_aula_pie():
         cur = conn.cursor()
 
         df = pd.DataFrame.from_dict(vcomments)
-        # df.to_sql('comments', hook.get_sqlalchemy_engine(), if_exists='replace', index=False)
         for item in df.to_dict(orient="records"):   
-            # print(item.get)
             query = f""" 
             INSERT INTO public."comments"
             (postid, id, "name", email, body)
@@ -54,6 +52,7 @@ def tutorial_aula_pie():
             print(query)
             cur.execute(query)
         conn.commit()
+
     extract1 = extract()
     createTable1 = createTable()
     load_raw1= load_raw(extract1)
